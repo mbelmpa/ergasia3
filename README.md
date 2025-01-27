@@ -1,1 +1,2 @@
 # ergasia3
+O kodikas ylopoiei ena aplo ilektroniko katasthma (e-shop) pou xrisimopoiei sockets gia tin epikoinonia metaksy pelaton kai diakomisti. O diakomistis diaxeirizetai enan katalogo proionton me periorismeni diathesimotita kai dexetai paraggelies apo tous pelates. Gia kathe paraggelia, elegxei ti diathesimotita ton proionton kai enimeronei ton pelati an h paraggelia itan epityxis h apotyximeni. Sto telos, dimiourgei mia anafora me ta statistika ton paraggelion, opou periexontai o arithmos ton poliseon, aitimata pelaton pou den eksypiretithikan, kai o synolikos tziros.
