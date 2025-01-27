@@ -9,7 +9,7 @@
 #define MAXPRODUCTS 20
 #define MAXCLIENTS 5
 
-struct Product
+struct Product //domh proiontos
 {
  char description[50];
  float price;
@@ -21,11 +21,11 @@ struct Product
 //katalogos proiontwn
 struct Product catalog[MAXPRODUCTS];
 
-void initialize_catalog()
+void initialize_catalog() //sinartisi gia arxikopoihsh katalogou proionton
 {
  for (int i = 0; i < MAXPRODUCTS; i++) 
  {
-  printf(catalog[i].description, sizeof(catalog[i].description), "Product %d", i + 1);
+  printf(catalog[i].description, sizeof(catalog[i].description), "Product %d", i + 1); //dimiourgia perigrafhs proiontos
   catalog[i].price = (i + 1) * 10.0;
   catalog[i].item_count = 2; //2 temaxia gia kathe proion
   catalog[i].total_requests = 0;
@@ -33,30 +33,30 @@ void initialize_catalog()
  }
 }
 
-void handle_client(int client_socket)
+void handle_client(int client_socket) //sinartisi eksipiretisis pelatwn
 {
- char buffer[1024];
+ char buffer[1024]; //buffer epikoinwnias
  int product_id;
  while (read(client_socket, &product_id, sizeof(product_id)) > 0) 
  {
-  if (product_id < 0 || product_id >= MAXPRODUCTS) 
+  if (product_id < 0 || product_id >= MAXPRODUCTS) //elegxos an to product_id einai egkyro
   {
-   printf(buffer, sizeof(buffer), "Invalid product ID.\n");
+   printf(buffer, sizeof(buffer), "Invalid product ID.\n"); //minima lathous
   }
   else
   {
-   catalog[product_id].total_requests++;
+   catalog[product_id].total_requests++; // aukshsh arithmou aithmatwn
    if (catalog[product_id].item_count > 0)
    {
-    catalog[product_id].item_count--;
-    catalog[product_id].total_sold++;
+    catalog[product_id].item_count--; //meiwsh pososthtas
+    catalog[product_id].total_sold++; //aukshsh pwlhsewn
     printf(buffer, sizeof(buffer), "Order successful. Product: %s, Price: %.2f\n",
-    catalog[product_id].description, catalog[product_id].price);
+    catalog[product_id].description, catalog[product_id].price); //epituxia paraggelias
    }
    else
    {
     printf(buffer, sizeof(buffer), "Product out of stock: %s\n",
-    catalog[product_id].description);
+    catalog[product_id].description); // eksantlhsh proiontos
    }
   } 
   write(client_socket, buffer, strlen(buffer));
@@ -68,32 +68,32 @@ void handle_client(int client_socket)
 
 int main() 
 {
- int server_fd, client_socket;
- struct sockaddr_in server_addr, client_addr;
+ int server_fd, client_socket; //metavlhtes twn sockets
+ struct sockaddr_in server_addr, client_addr; //domes gia dieuthinseis server kai client
  socklen_t addr_len = sizeof(client_addr);
  initialize_catalog();
- if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) 
+ if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) //dimiourgia socket
  {
   perror("Socket failed");
   exit(EXIT_FAILURE);
  }
  server_addr.sin_family = AF_INET;
- server_addr.sin_addr.s_addr = INADDR_ANY;
+ server_addr.sin_addr.s_addr = INADDR_ANY; //rythmish dieythinshs server
  server_addr.sin_port = htons(PORT);
- if (bind(server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
+ if (bind(server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) //desmeush socket
  {
   perror("Bind failed");
   close(server_fd);
   exit(EXIT_FAILURE);
  }
- if (listen(server_fd, MAXCLIENTS) < 0) 
+ if (listen(server_fd, MAXCLIENTS) < 0) //enarksi akroashs sundesewn
  {
   perror("Listen failed");
   close(server_fd);
   exit(EXIT_FAILURE);
  }
  printf("Server is running on port %d...\n", PORT);
- while ((client_socket = accept(server_fd, (struct sockaddr *)&client_addr, &addr_len)) >= 0) 
+ while ((client_socket = accept(server_fd, (struct sockaddr *)&client_addr, &addr_len)) >= 0) //vroxos gia apodoxh sundesewn
  {
   pid_t pid = fork();
   if (pid < 0) 
@@ -113,7 +113,7 @@ int main()
    close(client_socket);
   }
  }
- if (client_socket < 0)
+ if (client_socket < 0) //elegxos apotyxias apodoxhs sundeshs
  { 
   perror("Accept failed");
   close(server_fd);
